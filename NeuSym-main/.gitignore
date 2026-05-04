@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+venv/
+
+# Large generated outputs (regenerate by running the pipeline)
+outputs/
+data/
+
+# Model checkpoints and PySR artifacts
+*.pt
+*.pkl
+
+# Julia / PySR internals
+.julia/
+*.jl.cov
+*.jl.mem
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

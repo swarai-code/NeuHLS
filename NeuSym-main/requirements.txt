@@ -1,0 +1,24 @@
+# Core ML
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Numerics / data
+numpy>=1.24.0
+pandas>=1.5.0
+scikit-learn>=1.2.0
+scipy>=1.10.0
+
+# Symbolic regression
+# PySR requires Julia to be installed separately.
+# First-time setup:
+#   pip install pysr
+#   python -c "import juliapkg; juliapkg.resolve()"
+# See: https://astroautomata.com/PySR/
+pysr>=0.18.0
+
+# Symbolic math
+sympy>=1.12
+
+# Utilities
+tqdm>=4.64.0
+matplotlib>=3.6.0
