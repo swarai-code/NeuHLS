@@ -1,12 +1,18 @@
-# run_hls.tcl — placeholder Vitis HLS synthesis script for SR-1L-SRL
-# Adjust paths and part number before running.
+# hls/run_hls.tcl — SR-1L-SCE
 
-open_project hls_proj_SR-1L-SRL
+open_project symbolic_head_proj
 set_top symbolic_head
-add_files {/home/swarnalp/NeuSym_server_run1/outputs/hls/SR-1L-SRL_symbolic_head.cpp}
+add_files {../hls_generated/SR-1L-SCE_symbolic_head.cpp}
+
 open_solution "solution1"
-set_part {xc7z020clg484-1}   ;# change to target device
+set_part {xc7z020clg484-1}
 create_clock -period 10 -name default
+
 csynth_design
 export_design -format ip_catalog
+
+file copy -force \
+    symbolic_head_proj/solution1/syn/report/symbolic_head_csynth.rpt \
+    SR_1L_SCE_REPORT.rpt
+
 close_project
