@@ -4,18 +4,33 @@
 // Equation: (((x121 + ((x24 - x0) + (x63 - x47))) + (-4.668614 - x66)) * 0.7971458) - (x38 * 2.8560774)
 
 #include "SR-1L-SCE_symbolic_head.h"
-#include <math.h>
 
-inline float _square(float v) { return v * v; }
-inline float _relu(float v)   { return (v > 0.0f) ? v : 0.0f; }
-
-// symbolic_head: pure combinational function (no loops).
-// ARRAY_PARTITION complete makes every element available in the same clock
-// cycle, which is required when the expression references many inputs at once.
-// For dim > 128 (2L experiments) the tool may warn about register pressure;
-// lower the partition factor or switch to ap_fifo streaming if needed.
-float symbolic_head(float x[128]) {
+float symbolic_head(float x[SYMBOLIC_DIM]) {
 #pragma HLS INTERFACE ap_memory port=x
-#pragma HLS ARRAY_PARTITION variable=x complete dim=1
-    return (((x[121] + ((x[24] - x[0]) + (x[63] - x[47]))) + (-4.668614 - x[66])) * 0.7971458) - (x[38] * 2.8560774);
+
+    const int idx[SYMBOLIC_NUM_TERMS] = {
+        121, 24, 0, 63, 47, 66, 38
+    };
+
+    const float coef[SYMBOLIC_NUM_TERMS] = {
+         0.7971458f,
+         0.7971458f,
+        -0.7971458f,
+         0.7971458f,
+        -0.7971458f,
+        -0.7971458f,
+        -2.8560774f
+    };
+
+#pragma HLS ARRAY_PARTITION variable=idx complete
+#pragma HLS ARRAY_PARTITION variable=coef complete
+
+    float acc = -4.668614f * 0.7971458f;
+
+    for (int i = 0; i < SYMBOLIC_NUM_TERMS; i++) {
+#pragma HLS PIPELINE II=1
+        acc += coef[i] * x[idx[i]];
+    }
+
+    return acc;
 }
