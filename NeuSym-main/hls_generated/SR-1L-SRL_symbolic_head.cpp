@@ -43,7 +43,7 @@ out_t symbolic_head(feat_t sparse_x[SYMBOLIC_NUM_TERMS]) {
     // Applied before the sum — result fed into the scaled group.
     feat_t relu_x27 = relu_fixed(sparse_x[3]);
  
-    // ── Balanced binary addition tree for scaled group ────────────
+    // Balanced binary addition tree for scaled group 
     // Inner sum: x7 - x3 - x65 - relu(x27) + x24 - x118
     // Positive:  x7, x24
     // Negative:  x3, x65, relu(x27), x118
@@ -65,11 +65,11 @@ out_t symbolic_head(feat_t sparse_x[SYMBOLIC_NUM_TERMS]) {
     // Exact multiply — HLS maps to DSP48.
     acc_t scaled = inner_sum * (acc_t)(0.72398f);
  
-    // ── x74 term (separate coefficient) ──────────────────────────
+    //x74 term (separate coefficient) 
     // Exact multiply — HLS maps to DSP48.
     acc_t term_x74 = (acc_t)sparse_x[6] * (acc_t)(0.21851327f);
  
-    // ── Final result ──────────────────────────────────────────────
+    // Final result 
     // 0.72398*(...) - 0.21851327*x74 + x22
     acc_t result = scaled - term_x74 + (acc_t)sparse_x[7];
  
