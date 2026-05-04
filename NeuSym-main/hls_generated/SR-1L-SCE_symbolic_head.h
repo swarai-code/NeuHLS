@@ -5,6 +5,7 @@
 #define SR_1L_SCE_SYMBOLIC_HEAD_H
 
 #define SYMBOLIC_DIM 128
+#define SYMBOLIC_NUM_TERMS 7
 
 float symbolic_head(float x[SYMBOLIC_DIM]);
 
